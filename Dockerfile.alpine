@@ -1,5 +1,4 @@
 FROM alpine:3.14 as builder
-LABEL org.opencontainers.image.authors="ostashkin.mike@gmail.com"
 
 ARG YQ_VERSION=v4.29.2
 ARG YQ_BINARY=yq_linux_amd64
@@ -31,7 +30,6 @@ WORKDIR /opt/app
 RUN task build
 
 FROM busybox as release
-LABEL org.opencontainers.image.authors="ostashkin.mike@gmail.com"
 
 WORKDIR /opt/app
 COPY --from=build /opt/app/build/cv.html cv.html
