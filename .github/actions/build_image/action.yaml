@@ -23,5 +23,3 @@ runs:
     - run: |
         docker build -t ${{ inputs.image }} -f ${{ inputs.dockerfile }} --target ${{ inputs.target }} ${{ inputs.context }}
       shell: bash
-
-
