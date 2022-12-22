@@ -1,0 +1,48 @@
+name: CI workflow
+on:
+  push: {}
+  workflow_dispatch:
+    inputs:
+      tag:
+        default: latest
+        description: image tag
+      base_image:
+        required: true
+        type: choice
+        default: alpine
+        options:
+          - alpine
+          - ubuntu
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      BUILDER_IMAGE: cv-builder
+      RELEASE_IMAGE: cv
+      TAG: "${{ inputs.tag != '' && inputs.tag || github.ref_name }}"
+      BASE_IMAGE: "${{ inputs.base_image != '' && inputs.base_image || 'alpine' }}"
+    steps:
+      - name: Check out Project
+        uses: actions/checkout@v3
+
+      # Docs: https://github.com/docker/build-push-action
+      - name: Build builder image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: ./Dockerfile.${{ env.BASE_IMAGE }}
+          push: false
+          tags: ${{ env.BUILDER_IMAGE }}:${{ env.TAG }}
+          target: builder
+
+      - name: Test
+        run: |
+          docker run --rm ${{ env.BUILDER_IMAGE }}:${{ env.TAG }} json
+      - name: Build release image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: ./Dockerfile.${{ env.BASE_IMAGE }}
+          push: false
+          tags: ${{ env.BUILDER_IMAGE }}:${{ env.TAG }}
