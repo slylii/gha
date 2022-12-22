@@ -8,7 +8,6 @@ on:
         description: image tag
       base_image:
         required: true
-        type: choice
         default: ubuntu
 
 jobs:
