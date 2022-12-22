@@ -25,7 +25,7 @@ RUN wget -O- https://github.com/go-task/task/releases/download/${TASK_VERSION}/$
 WORKDIR /opt/app
 
 COPY src/ src/
-#COPY scripts/ scripts/
+COPY scripts/ scripts/
 COPY Taskfile.yaml Taskfile.yaml
 COPY .env .env
 
