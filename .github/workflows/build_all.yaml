@@ -7,7 +7,6 @@ jobs:
     strategy:
       matrix:
         base_image:
-          - alpine
           - ubuntu
         target:
           - builder

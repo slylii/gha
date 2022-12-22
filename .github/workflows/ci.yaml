@@ -9,9 +9,8 @@ on:
       base_image:
         required: true
         type: choice
-        default: alpine
+        default: ubuntu
         options:
-          - alpine
           - ubuntu
 
 jobs:
