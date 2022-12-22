@@ -1,6 +1,0 @@
-*.html
-*.json
-*.pdf
-build
-build/*
-.idea

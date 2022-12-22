@@ -2,7 +2,7 @@ services:
   cv:
     build:
       context: .
-      dockerfile: Dockerfile.ubuntu
+      dockerfile: Dockerfile.alpine
       target: release
     volumes:
       - cv:/opt/app
