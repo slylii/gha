@@ -9,10 +9,7 @@ on:
       base_image:
         required: true
         type: choice
-        default: alpine
-        options:
-          - alpine
-          - ubuntu
+        default: ubuntu
 
 jobs:
   build:
@@ -21,7 +18,7 @@ jobs:
       BUILDER_IMAGE: cv-builder
       RELEASE_IMAGE: cv
       TAG: "${{ inputs.tag != '' && inputs.tag || github.ref_name }}"
-      BASE_IMAGE: "${{ inputs.base_image != '' && inputs.base_image || 'alpine' }}"
+      BASE_IMAGE: "${{ inputs.base_image != '' && inputs.base_image || 'ubuntu' }}"
     steps:
       - name: Check out Project
         uses: actions/checkout@v3
