@@ -10,10 +10,10 @@ env:
   BASE_IMAGE: '{{ .BASE_IMAGE | default "alpine" }}'
   IMAGE_TAG: '{{ .BASE_IMAGE }}-{{ .VERSION }}'
   PROJECT: '{{ .PROJECT | default "cv" }}'
-tasks:
-  build:
-    cmds:
-      - scripts/build.sh
+#tasks:
+#  build:
+#    cmds:
+#      - scripts/build.sh
 
   json:
       deps:
