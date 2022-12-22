@@ -8,7 +8,11 @@ on:
         description: image tag
       base_image:
         required: true
-        default: ubuntu
+        type: choice
+        default: alpine
+        options:
+          - alpine
+          - ubuntu
 
 jobs:
   build:
@@ -17,7 +21,7 @@ jobs:
       BUILDER_IMAGE: cv-builder
       RELEASE_IMAGE: cv
       TAG: "${{ inputs.tag != '' && inputs.tag || github.ref_name }}"
-      BASE_IMAGE: "${{ inputs.base_image != '' && inputs.base_image || 'ubuntu' }}"
+      BASE_IMAGE: "${{ inputs.base_image != '' && inputs.base_image || 'alpine' }}"
     steps:
       - name: Check out Project
         uses: actions/checkout@v3
@@ -35,6 +39,7 @@ jobs:
       - name: Test
         run: |
           docker run --rm ${{ env.BUILDER_IMAGE }}:${{ env.TAG }} json
+
       - name: Build release image
         uses: docker/build-push-action@v3
         with:

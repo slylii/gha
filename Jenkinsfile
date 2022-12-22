@@ -7,6 +7,7 @@ pipeline {
     }
 
     parameters {
+        string(name: 'OS_NAME', defaultValue: 'alpine', description: '')
         string(name: 'IMAGE_TAG', defaultValue: "", description: '')
     }
 
@@ -26,7 +27,7 @@ pipeline {
             steps {
                 script {
 
-                    builderImage = docker.build("cv-builder:${TAG}")
+                    builderImage = docker.build("cv-builder:${TAG}", "-f Dockerfile.${params.OS_NAME} --target builder .")
                     builderImage.withRun {c ->
                         "json"
                     }
@@ -37,7 +38,7 @@ pipeline {
         stage('Release image') {
             steps {
                 script {
-                    docker.build("cv:${TAG}")
+                    docker.build("cv:${TAG}", "-f Dockerfile.${params.OS_NAME} .")
                 }
             }
         }

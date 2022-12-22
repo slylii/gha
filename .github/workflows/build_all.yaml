@@ -7,6 +7,7 @@ jobs:
     strategy:
       matrix:
         base_image:
+          - alpine
           - ubuntu
         target:
           - builder
@@ -16,6 +17,7 @@ jobs:
       - name: Check out Project
         uses: actions/checkout@v3
 
+      # custom action
       - name: build
         uses: ./.github/actions/build_image
         with:
